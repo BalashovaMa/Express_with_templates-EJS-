@@ -11,8 +11,15 @@
     <%- include('includes/aside') %>
       <main>
         <h1>
-          Title of the restaurant <%= rid %>
+          <%= restaurant.name %>
         </h1>
+        <p>
+          <%= restaurant.cuisine %> | <%= restaurant.address %>
+        </p>
+        <p>
+          <%= restaurant.description %>
+        </p>
+        <p><a href="<%= restaurant.website %>">View website</a></p>
       </main>
 </body>
 
