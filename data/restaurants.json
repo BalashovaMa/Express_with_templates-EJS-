@@ -1,16 +1,18 @@
 [
     {
-        "name": "Balashova Marina",
-        "address": "м. Кам'янське, пр. Наддніпрянський, 1а - 55",
-        "cuisine": "dd",
-        "website": "http://localhost:3000/recommend",
-        "description": "qaz"
-    },
-    {
         "name": "name",
         "address": "м. Кам'янське, пр. Наддніпрянський, 1а - 55",
-        "cuisine": "dddd",
+        "cuisine": "ukranian",
         "website": "http://localhost:3000/recommend",
-        "description": "tyuhbv"
+        "description": "qaz",
+        "id": "d8a0b680-904f-432e-b98d-722283f7b3ff"
+    },
+    {
+        "name": "food",
+        "address": "м. Кам'янське, пр. Наддніпрянський, 1а - 55",
+        "cuisine": "german",
+        "website": "http://localhost:3000/recommend",
+        "description": "rfv",
+        "id": "45f6078c-52d0-4ae7-a32d-1bcf8d554b6e"
     }
 ]
