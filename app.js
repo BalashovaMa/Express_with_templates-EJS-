@@ -2,9 +2,9 @@ const path = require('path');
 const fs = require('fs');
 
 const express = require('express');
-
 const uuid = require('uuid');
-const { restart } = require('nodemon');
+
+const resData = require('./util/restaurant-data');
 
 const app = express();
 
@@ -20,25 +20,21 @@ app.get('/', function (req, res) {
 
 app.get('/restaurants', function (req, res) {
 
-    const filePath = path.join(__dirname, 'data', 'restaurants.json');
-    const fileData = fs.readFileSync(filePath);
-    const storedRestaurants = JSON.parse(fileData);
+    const storedRestaurants = resData.getStoredRestaurants();
 
     res.render('restaurants', { numberOfRestaurants: storedRestaurants.length, restaurants: storedRestaurants });
 });
 
 app.get('/restaurants/:id', function (req, res) {
     const restaurantId = req.params.id;
-    const filePath = path.join(__dirname, 'data', 'restaurants.json');
-    const fileData = fs.readFileSync(filePath);
-    const storedRestaurants = JSON.parse(fileData);
+    const storedRestaurants = resData.getStoredRestaurants();
 
     for (const restaurant of storedRestaurants) {
         if (restaurant.id === restaurantId) {
             return res.render('restaurants-details', { restaurant: restaurant });
         }
     }
-    res.render('404');
+    res.status(404).render('404');
 })
 
 app.get('/recommend', function (req, res) {
@@ -48,11 +44,9 @@ app.get('/recommend', function (req, res) {
 app.post('/recommend', function (req, res) {
     const restaurant = req.body;
     restaurant.id = uuid.v4();
-    const filePath = path.join(__dirname, 'data', 'restaurants.json');
-    const fileData = fs.readFileSync(filePath);
-    const storedRestaurants = JSON.parse(fileData);
-    storedRestaurants.push(restaurant);
-    fs.writeFileSync(filePath, JSON.stringify(storedRestaurants));
+    const restaurants = resData.getStoredRestaurants();
+    restaurants.push(restaurant);
+    resData.storeRestaurants(restaurants);
     res.redirect('/confirm');
 });
 
@@ -65,11 +59,11 @@ app.get('/about', function (req, res) {
 });
 
 app.use(function (req, res) {
-    res.render('404');
+    res.status(404).render('404');
 });
 
 app.use(function (error, req, res, next) {
-    res.render('500')
+    res.status(500).render('500')
 })
 
 
